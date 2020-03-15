@@ -3,11 +3,11 @@ class FilesStorage {
     this.files = [];
   }
 
-  addFile(name, content) {
+  addFileSync(name, content) {
     this.files.push({ name, content });
   }
 
-  getFile(name) {
+  getFileSync(name) {
     let content = null;
 
     if (this.files && this.files.length > 0)

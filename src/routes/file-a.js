@@ -1,7 +1,8 @@
-const FILES = require('../files/files');
+const FILES = require('../enums/files');
+const { wrapRoute } = require('../helpers/route-wrapper');
 const filesStorage = require('../files/files-storage');
 
-exports.get = (req, res) => {
+exports.get = wrapRoute((req, res) => {
   res.type('text/plain');
-  res.send(filesStorage.getFile(FILES.TXT.A));
-};
+  return filesStorage.getFileSync(FILES.TXT.A);
+});

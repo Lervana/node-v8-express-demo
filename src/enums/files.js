@@ -5,6 +5,7 @@ module.exports = Object.freeze({
   },
   JSON: {
     A: 'files/json-a.json',
+    B: 'files/json-b.json',
   },
   CONFIG: {
     PORT: 'port.txt',

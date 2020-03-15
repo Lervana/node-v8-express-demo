@@ -3,7 +3,7 @@ const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 
 const { log } = require('../logger');
-const FILES = require('./files');
+const FILES = require('../enums/files');
 
 class FilesManager {
   constructor(customFs = fs) {
