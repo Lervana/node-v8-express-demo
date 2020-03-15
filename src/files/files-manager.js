@@ -1,26 +1,40 @@
-const fs = require('fs');
 const path = require('path');
+const Promise = require('bluebird');
+const fs = Promise.promisifyAll(require('fs'));
 
 const { log } = require('../logger');
 const FILES = require('./files');
 
-const readFile = path => {
-  try {
-    return fs.readFileSync(path);
-  } catch (err) {
-    log.error(err && err.message);
-    throw err;
+class FilesManager {
+  constructor(customFs = fs) {
+    this.fs = customFs;
   }
-};
 
-const readPortFile = () => {
-  let port = readFile(path.join(path.resolve('data'), FILES.CONFIG.PORT));
-  port = port && port.split('\n');
-  port = port && port[0];
-  port = Number(port);
+  readFileSync(path) {
+    try {
+      return fs.readFileSync(path);
+    } catch (err) {
+      log.error(err && err.message);
+      throw err;
+    }
+  }
 
-  return port;
-};
+  readFile(path) {
+    return fs.readFileAsync(path);
+  }
 
-exports.readFile = readFile;
-exports.readPortFile = readPortFile;
+  readPortFileSync() {
+    let port = this.readFileSync(path.join(path.resolve('data'), FILES.CONFIG.PORT));
+    port = port && port.split('\n');
+    port = port && port[0];
+    port = Number(port);
+
+    return port;
+  }
+}
+
+const fm = new FilesManager();
+
+exports.readFile = fm.readFile;
+exports.readFileSync = fm.readFileSync;
+exports.readPortFileSync = fm.readPortFileSync;

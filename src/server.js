@@ -7,7 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { env, defaultPort } = require('./config');
-const { readPortFile } = require('./files/files-manager');
+const { readPortFileSync } = require('./files/files-manager');
 const { log } = require('./logger');
 
 class Server {
@@ -19,12 +19,12 @@ class Server {
     this.instance.use(cors());
     this.instance.use(bodyParser.json({ limit: '1mb' }));
     this.instance.disable('x-powered-by');
-    this.configure();
+    this.configureSync();
   }
 
-  configure() {
+  configureSync() {
     try {
-      const port = readPortFile();
+      const port = readPortFileSync();
       if (!_.isNaN(port)) this.port = port;
       else log.warn('Invalid value in /data/port.txt, using default port');
     } catch (err) {
@@ -32,7 +32,7 @@ class Server {
     }
   }
 
-  addRoutes(routes) {
+  addRoutesSync(routes) {
     routes.forEach(({ method, path, cbs }) => {
       log.info(`Adding route: ${`[${method}] ${path}`.yellow}`);
       if (method && path && cbs) this.instance[method.toLowerCase()](path, cbs);

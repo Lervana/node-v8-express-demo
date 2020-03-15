@@ -1,3 +1,1 @@
-const testGet = (req, res) => res.send({ test: { ok: true } });
-
-exports.get = testGet;
+exports.get = (req, res) => res.send({ test: { ok: true } });
