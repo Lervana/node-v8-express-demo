@@ -6,9 +6,11 @@ const helmet = require('helmet');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const { env, defaultPort } = require('./config');
-const { readPortFileSync } = require('./files/files-manager');
+const config = require('./config');
+const fm = require('./files/files-manager');
 const { log } = require('./logger');
+
+const { env, defaultPort } = config;
 
 class Server {
   constructor() {
@@ -24,11 +26,13 @@ class Server {
 
   configureSync() {
     try {
-      const port = readPortFileSync();
-      if (!_.isNaN(port)) this.port = port;
-      else log.warn('Invalid value in /data/port.txt, using default port');
+      const port = fm.readPortFileSync();
+      if (!_.isNaN(port)) {
+        this.port = port;
+        config.port = port;
+      } else log.warn('Invalid value in /data/port.txt, using default port');
     } catch (err) {
-      log.info('Port file config not found, using default port');
+      log.warn(`Port file config not found, using default port (${err})`);
     }
   }
 

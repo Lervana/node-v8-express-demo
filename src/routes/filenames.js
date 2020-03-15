@@ -6,5 +6,8 @@ const { wrapJsonRoute } = require('../wrappers/route-wrapper');
 const dirPath = path.resolve('data/files');
 
 exports.get = wrapJsonRoute(async () => {
-  return (await fm.getFilesList(dirPath)).map(name => ({ name }));
+  const fileNames = [];
+  const files = await fm.getFilesList(dirPath);
+  files.forEach(name => name.endsWith('.txt') && fileNames.push({ name }));
+  return fileNames;
 });
