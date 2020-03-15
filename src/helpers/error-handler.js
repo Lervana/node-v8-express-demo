@@ -4,10 +4,17 @@ const { log } = require('../logger');
 const { errorResponse } = require('./response');
 
 const handleCustomError = error => ({
-  status: error.code,
+  status: error.custom_code,
   log: error.log,
   send: errorResponse(error.code, error.errors),
   type: 'CustomError',
+});
+
+const handleFileNotFoundError = error => ({
+  status: CODES.NOT_FOUND,
+  log: error && error.message ? error.message : error,
+  send: errorResponse(CODES.NOT_FOUND, [{ code: CODES.NOT_FOUND_FILE, msg: 'File not found' }]),
+  type: 'FileNotFound',
 });
 
 module.exports = (error, res, isJson) => {
@@ -20,7 +27,8 @@ module.exports = (error, res, isJson) => {
   };
 
   //Specific errors handlers should go here
-  if (error && error.code) result = handleCustomError(error);
+  if (error && error.custom_code) result = handleCustomError(error);
+  else if (error.code === 'ENOENT') result = handleFileNotFoundError(error);
 
   log.error(result.log);
   res.status(result.status);

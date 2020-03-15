@@ -7,7 +7,7 @@ const createResponse = (status, code, data, errors) => {
   const response = {};
 
   if (status) response.status = status;
-  if (code) response.code = code;
+  if (code) response.custom_code = code;
   if (data) response.data = data;
   if (errors) response.errors = errors;
 

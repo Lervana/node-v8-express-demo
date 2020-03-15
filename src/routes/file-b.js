@@ -1,6 +1,6 @@
 const path = require('path');
 
-const { wrapRoute } = require('../helpers/route-wrapper');
+const { wrapRoute } = require('../wrappers/route-wrapper');
 const FILES = require('../enums/files');
 const fm = require('../files/files-manager');
 
