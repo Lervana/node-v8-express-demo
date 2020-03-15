@@ -24,14 +24,24 @@ class Server {
 
   configure() {
     try {
-      let data = fs.readFileSync('./data/port.txt', 'utf8');
-      data = data && data.trim();
+      let port = fs.readFileSync('./data/port.txt', 'utf8');
+      port = port && port.split('\n');
+      port = port && port[0];
+      port = Number(port);
 
-      if (_.isNumber(data)) this.port = Number(data);
+      if (!_.isNaN(port)) this.port = port;
       else log.warn('Invalid value in /data/port.txt, using default port');
-    } catch (e) {
+    } catch (err) {
       log.info('Port file config not found, using default port');
     }
+  }
+
+  addRoutes(routes) {
+    routes.forEach(({ method, path, cbs }) => {
+      log.info(`Adding route: ${`[${method}] ${path}`.yellow}`);
+      if (method && path && cbs) this.instance[method.toLowerCase()](path, cbs);
+      else throw new Error('Route need to have defined method, path and callbacks');
+    });
   }
 
   start() {
