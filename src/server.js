@@ -1,6 +1,5 @@
 require('colors');
 
-var fs = require('fs');
 const _ = require('lodash');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -8,6 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const { env, defaultPort } = require('./config');
+const { readPortFile } = require('./files/files-manager');
 const { log } = require('./logger');
 
 class Server {
@@ -24,11 +24,7 @@ class Server {
 
   configure() {
     try {
-      let port = fs.readFileSync('./data/port.txt', 'utf8');
-      port = port && port.split('\n');
-      port = port && port[0];
-      port = Number(port);
-
+      const port = readPortFile();
       if (!_.isNaN(port)) this.port = port;
       else log.warn('Invalid value in /data/port.txt, using default port');
     } catch (err) {

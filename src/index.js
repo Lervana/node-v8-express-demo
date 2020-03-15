@@ -1,3 +1,5 @@
+require('./files');
+
 const Server = require('./server');
 const routes = require('./routes');
 
