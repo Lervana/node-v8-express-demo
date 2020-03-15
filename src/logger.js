@@ -37,15 +37,15 @@ class Logger {
   }
 
   warn(msg) {
-    this.log('warn', msg);
+    this.log('warn', msg && msg.magenta);
   }
 
   error(msg) {
-    this.log('error', msg);
+    this.log('error', msg && msg.red);
   }
 
   fatal(msg) {
-    this.log('fatal', msg);
+    this.log('fatal', msg && msg.red);
   }
 }
 
