@@ -8,7 +8,7 @@ const wrapRoute = (cb, isJson = false) => {
       res.status(CODES.SUCCESS);
       res[isJson ? 'json' : 'send'](response);
     } catch (error) {
-      handleError(error, res);
+      handleError(error, res, isJson);
     }
   };
 };
