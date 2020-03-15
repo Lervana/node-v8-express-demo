@@ -5,6 +5,7 @@ const fileBRoutes = require('./file-b');
 const jsonARoutes = require('./json-a');
 const jsonBRoutes = require('./json-b');
 const sizeRoutes = require('./size');
+const filenamesRoutes = require('./filenames');
 
 module.exports = [
   { method: 'GET', path: '/test', cbs: testRoutes.get },
@@ -14,4 +15,5 @@ module.exports = [
   { method: 'GET', path: '/json-a', cbs: jsonARoutes.get },
   { method: 'GET', path: '/json-b', cbs: jsonBRoutes.get },
   { method: 'GET', path: '/size', cbs: sizeRoutes.get },
+  { method: 'GET', path: '/filenames', cbs: filenamesRoutes.get },
 ];

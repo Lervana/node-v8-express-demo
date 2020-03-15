@@ -10,25 +10,29 @@ class FilesManager {
     this.fs = customFs;
   }
 
-  readFileSync(path) {
+  async readFileSync(path) {
     try {
-      return fs.readFileSync(path);
+      return await fs.readFileSync(path);
     } catch (err) {
       log.error(err && err.message);
       throw err;
     }
   }
 
-  readFile(path) {
-    return fs.readFileAsync(path);
+  async readFile(path) {
+    return await fs.readFileAsync(path);
   }
 
-  getFileInfo(path) {
-    return fs.statAsync(path);
+  async getFileInfo(path) {
+    return await fs.statAsync(path);
   }
 
   async getFileSize(path) {
     return (await this.getFileInfo(path)).size;
+  }
+
+  async getFilesList(path) {
+    return await fs.readdirAsync(path);
   }
 
   readPortFileSync() {
@@ -46,5 +50,6 @@ const fm = new FilesManager();
 exports.readFile = fm.readFile;
 exports.getFileInfo = fm.getFileInfo;
 exports.getFileSize = fm.getFileSize;
+exports.getFilesList = fm.getFilesList;
 exports.readFileSync = fm.readFileSync;
 exports.readPortFileSync = fm.readPortFileSync;
