@@ -36,7 +36,7 @@ class FilesManager {
   }
 
   readPortFileSync() {
-    const portConfigFilePath = path.join(path.resolve('data'), FILES.CONFIG.PORT);
+    const portConfigFilePath = path.join(path.resolve(FILES.DATA_DIR), FILES.CONFIG.PORT);
     let port = fs.readFileSync(portConfigFilePath, 'utf8');
     port = port && port.split('\n');
     port = port && port[0];

@@ -1,9 +1,10 @@
 const path = require('path');
 
+const FILES = require('../enums/files');
 const fm = require('../files/files-manager');
 const { wrapJsonRoute } = require('../wrappers/route-wrapper');
 
-const dirPath = path.resolve('data/files');
+const dirPath = path.resolve(FILES.FILES_DIR);
 
 exports.get = wrapJsonRoute(async () => {
   const fileNames = [];
