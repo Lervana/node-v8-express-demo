@@ -1,5 +1,6 @@
 const path = require('path');
 
+const asyncForEach = require('../helpers/async-forEach');
 const handleError = require('../helpers/error-handler');
 const fm = require('../files/files-manager');
 const FILES = require('../enums/files');
@@ -80,4 +81,24 @@ exports.getPromise = (req, res) => {
       });
     })
     .catch(err => handleError(err, res, true));
+};
+
+//GET - async/await
+exports.getAwait = async (req, res) => {
+  try {
+    const response = [];
+    const fileNames = await fm.fs.readdirAsync(namesDirPath);
+
+    await asyncForEach(fileNames, async name => {
+      const content = await fm.fs.readFileAsync(getNameFilePath(name));
+      const id = getId(content);
+      const value = await fm.fs.readFileAsync(getValueFilePath(id));
+      response.push({ name: nameTrim(name), id, value: valueTrim(value) });
+    });
+
+    res.status(CODES.SUCCESS);
+    res.json(response);
+  } catch (err) {
+    handleError(err, res, true);
+  }
 };
