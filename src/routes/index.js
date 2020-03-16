@@ -9,6 +9,7 @@ const sizeRoutes = require('./size');
 const sizesRoutes = require('./sizes');
 const txtRoutes = require('./txt');
 const stringsRoutes = require('./strings');
+const dataRoutes = require('./data');
 
 module.exports = [
   { method: 'GET', path: '/test', cbs: testRoutes.get },
@@ -22,4 +23,5 @@ module.exports = [
   { method: 'GET', path: '/sizes', cbs: sizesRoutes.get },
   { method: 'GET', path: '/txt', cbs: txtRoutes.get },
   { method: 'GET', path: '/strings', cbs: stringsRoutes.get },
+  { method: 'PUT', path: '/data/:id', cbs: dataRoutes.put },
 ];

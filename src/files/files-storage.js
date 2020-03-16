@@ -19,7 +19,17 @@ class FilesStorage {
 
     return content;
   }
+
+  hasFileSync(fileName) {
+    let result = false;
+    this.files.forEach(({ name }) => {
+      if (fileName === name) result = true;
+    });
+
+    return result;
+  }
 }
 
 const filesStorage = new FilesStorage();
-module.exports = filesStorage;
+exports.filesStorage = filesStorage;
+exports.FilesStorage = FilesStorage;
