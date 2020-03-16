@@ -12,4 +12,7 @@ module.exports = Object.freeze({
   CONFIG: {
     PORT: 'port.txt',
   },
+  SCRIPTS: {
+    STRINGS: 'data/scripts/strings.js',
+  },
 });
