@@ -36,3 +36,23 @@ exports.put = (req, res) => {
     log.error(e);
   }
 };
+
+exports.delete = (req, res) => {
+  try {
+    const fileName = req.params.id;
+    const hasFile = localFileStorage.hasFileSync(fileName);
+
+    if (!hasFile) {
+      res.status(CODES.NOT_FOUND);
+      res.json();
+    } else {
+      localFileStorage.removeFileSync(fileName);
+      res.status(CODES.SUCCESS);
+      res.json({ ok: true });
+    }
+  } catch (e) {
+    res.status(CODES.BAD_REQUEST);
+    res.json({ error: true });
+    log.error(e);
+  }
+};

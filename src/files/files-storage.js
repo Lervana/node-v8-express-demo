@@ -29,6 +29,21 @@ class FilesStorage {
 
     return result;
   }
+
+  removeFileSync(fileName) {
+    let index = null;
+
+    this.files.forEach(({ name }, i) => {
+      if (fileName === name) index = i;
+    });
+
+    if (index > -1) {
+      this.files.splice(index, 1);
+      return true;
+    }
+
+    return false;
+  }
 }
 
 const filesStorage = new FilesStorage();
