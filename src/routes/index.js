@@ -24,4 +24,5 @@ module.exports = [
   { method: 'GET', path: '/txt', cbs: txtRoutes.get },
   { method: 'GET', path: '/strings', cbs: stringsRoutes.get },
   { method: 'PUT', path: '/data/:id', cbs: dataRoutes.put },
+  { method: 'GET', path: '/data/:id', cbs: dataRoutes.get },
 ];

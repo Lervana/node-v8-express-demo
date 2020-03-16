@@ -4,7 +4,8 @@ class FilesStorage {
   }
 
   addFileSync(name, content) {
-    this.files.push({ name, content });
+    const fileToAdd = { name, content: content };
+    this.files.push(fileToAdd);
   }
 
   getFileSync(name) {

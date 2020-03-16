@@ -4,6 +4,25 @@ const { log } = require('../logger');
 
 const localFileStorage = new FilesStorage();
 
+exports.get = (req, res) => {
+  try {
+    const fileName = req.params.id;
+    const hasFile = localFileStorage.hasFileSync(fileName);
+
+    if (!hasFile) {
+      res.status(CODES.NOT_FOUND);
+      res.json();
+    } else {
+      res.status(CODES.SUCCESS);
+      res.json(localFileStorage.getFileSync(fileName));
+    }
+  } catch (e) {
+    res.status(CODES.BAD_REQUEST);
+    res.json({ error: true });
+    log.error(e);
+  }
+};
+
 exports.put = (req, res) => {
   try {
     const fileName = req.params.id;
@@ -12,7 +31,7 @@ exports.put = (req, res) => {
     res.status(CODES.SUCCESS);
     res.json({ ok: true });
   } catch (e) {
-    res.status(CODES.SUCCESS);
+    res.status(CODES.BAD_REQUEST);
     res.json({ error: true });
     log.error(e);
   }
