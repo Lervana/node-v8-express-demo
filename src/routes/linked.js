@@ -9,6 +9,17 @@ const namesDirPath = path.resolve(FILES.LINKED.NAMES);
 const valuesDirPath = path.resolve(FILES.LINKED.VALUES);
 
 //Helpers
+const getNameFilePath = name => path.join(namesDirPath, name);
+const getValueFilePath = id => path.join(valuesDirPath, id + '.txt');
+const nameTrim = name =>
+  name
+    .split('.')
+    .slice(0, -1)
+    .join('');
+const getId = content => Number(content.toString().trim());
+const valueTrim = value => value.toString().trim();
+
+//GET - callbacks
 const readFileContent = (path, res, cb) => {
   fm.fs.readFile(path, (err, content) => {
     if (err) handleError(err, res, true);
@@ -23,17 +34,6 @@ const readFileNames = (res, cb) => {
   });
 };
 
-const getNameFilePath = name => path.join(namesDirPath, name);
-const getValueFilePath = id => path.join(valuesDirPath, id + '.txt');
-const nameTrim = name =>
-  name
-    .split('.')
-    .slice(0, -1)
-    .join('');
-const getId = content => Number(content.toString().trim());
-const valueTrim = value => value.toString().trim();
-
-//Endpoints
 exports.get = (req, res) => {
   (cb => {
     const response = [];
@@ -54,4 +54,30 @@ exports.get = (req, res) => {
     res.status(CODES.SUCCESS);
     res.json(response);
   });
+};
+
+//GET - promises
+const getResponse = (name, res) =>
+  fm.fs
+    .readFileAsync(getNameFilePath(name))
+    .then(content => {
+      const id = getId(content);
+      return fm.fs
+        .readFileAsync(getValueFilePath(id))
+        .then(value => ({ name: nameTrim(name), id, value: valueTrim(value) }))
+        .catch(err => handleError(err, res, true));
+    })
+    .catch(err => handleError(err, res, true));
+
+exports.getPromise = (req, res) => {
+  return fm.fs
+    .readdirAsync(namesDirPath)
+    .then(fileNames => {
+      const promises = fileNames.map(name => getResponse(name, res));
+      return Promise.all(promises).then(response => {
+        res.status(CODES.SUCCESS);
+        res.json(response);
+      });
+    })
+    .catch(err => handleError(err, res, true));
 };

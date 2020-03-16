@@ -28,4 +28,5 @@ module.exports = [
   { method: 'GET', path: '/data/:id', cbs: dataRoutes.get },
   { method: 'DELETE', path: '/data/:id', cbs: dataRoutes.delete },
   { method: 'GET', path: '/linked/callback', cbs: linkedRoutes.get },
+  { method: 'GET', path: '/linked/promise', cbs: linkedRoutes.getPromise },
 ];
