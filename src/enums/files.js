@@ -15,4 +15,8 @@ module.exports = Object.freeze({
   SCRIPTS: {
     STRINGS: 'data/scripts/strings.js',
   },
+  LINKED: {
+    NAMES: 'data/linked/names',
+    VALUES: 'data/linked/values',
+  },
 });

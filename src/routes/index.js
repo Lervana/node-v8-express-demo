@@ -10,6 +10,7 @@ const sizesRoutes = require('./sizes');
 const txtRoutes = require('./txt');
 const stringsRoutes = require('./strings');
 const dataRoutes = require('./data');
+const linkedRoutes = require('./linked');
 
 module.exports = [
   { method: 'GET', path: '/test', cbs: testRoutes.get },
@@ -26,4 +27,5 @@ module.exports = [
   { method: 'PUT', path: '/data/:id', cbs: dataRoutes.put },
   { method: 'GET', path: '/data/:id', cbs: dataRoutes.get },
   { method: 'DELETE', path: '/data/:id', cbs: dataRoutes.delete },
+  { method: 'GET', path: '/linked/callback', cbs: linkedRoutes.get },
 ];
