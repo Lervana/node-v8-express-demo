@@ -3,6 +3,7 @@ const CODES = require('../enums/codes');
 const { log } = require('../logger');
 
 const localFileStorage = new FilesStorage();
+exports.localFileStorage = localFileStorage;
 
 exports.get = (req, res) => {
   try {
